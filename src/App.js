@@ -1,6 +1,9 @@
+import React from 'react';
+import PokemonCard from './components/PokemonCard';
+
 function App() {
   return (
-    <h1>Hello React</h1>
+    <PokemonCard />
   );
 }
 
