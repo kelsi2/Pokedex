@@ -1,56 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-const PokemonCard = () => {
-  const [pokemon, setPokemon] = useState([]);
-
-  const fetchPokemon = async () => {
-    try {
-      const url = `https://pokeapi.co/api/v2/pokemon/ditto`;
-      const res = await fetch(url);
-      const data = await res.json();
-
-      console.log(data)
-      setPokemon(data);
-    } catch (e) {
-      console.log(e);
-    }
-  }
-  
-  useEffect(() => {
-    fetchPokemon();
-  }, [])
-  
+const PokemonCard = (props) => {
   // Type is in an array of objects, we can access it by type.type.name
-  const poke_types = pokemon.length !== 0 ? pokemon.types.map((type) => type.type.name) : null;
+  const poke_types = props.pokemon.length !== 0 && props.pokemon.types.map((type) => type.type.name)
   // If type exists in main_types, add it
   // const type = main_types.find(type => poke_types.indexOf(type) > -1);
 
-  const poke_abilities = pokemon.length !== 0 ? pokemon.abilities.map((ability) => {
+  const poke_abilities = props.pokemon.length !== 0 && props.pokemon.abilities.map((ability) => {
     return <p>{ability.ability.name}</p>
-  }) : null;
+  })
 
-  const poke_stats = pokemon.length !== 0 ? pokemon.stats.map((stat) => {
+  const poke_stats = props.pokemon.length !== 0 && props.pokemon.stats.map((stat) => {
     return <p>{stat.stat.name}</p>
-  }) : null;
+  })
 
   return (
-    <div>
-    {pokemon &&
-      <>
+    <>
+    {props.pokemon &&
+      <div>
         <div>
-          <img src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`} alt="Pokemon" />
+          <img src={`https://pokeres.bastionbot.org/images/pokemon/${props.pokemon.id}.png`} alt={props.pokemon.name} />
         </div>
         <div>
-          <h1>{pokemon.name}</h1>
-          <h1>{pokemon.height}</h1>
-          <h1>{pokemon.weight}</h1>
+          <h1>{props.pokemon.name}</h1>
+          <h1>{props.pokemon.height}</h1>
+          <h1>{props.pokemon.weight}</h1>
           <h1>{poke_types}</h1>
           <h1>{poke_abilities}</h1>
           <h1>{poke_stats}</h1>
         </div>
-        </>
+        </div>
       }
-    </div>
+      </>
   )
 }
 
