@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
-import { ThemeProvider } from '@emotion/react';
-import theme from './theme/globalStyles';
+import styled from '@emotion/styled';
 import PokemonCard from './components/PokemonCard';
 import Search from './components/Search';
+
+const ContentWrapper = styled.div `
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1200px;
+`;
 
 function App() {
   const [searchValue, setSearchValue] = useState('');
@@ -19,7 +28,7 @@ function App() {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
+      <ContentWrapper>
         <Search
           searchValue={searchValue}
           setSearchValue={setSearchValue}
@@ -29,7 +38,7 @@ function App() {
           pokemon={pokemon}
           searchValue={searchValue}
         />
-      </ThemeProvider>
+      </ContentWrapper>
     </>
   );
 }
