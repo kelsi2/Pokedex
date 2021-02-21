@@ -1,5 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
+const StyledWrapper = styled.div `
+  width: 100%;
+`
 
 const StyledForm = styled.form `
   display: flex;
@@ -9,12 +15,11 @@ const StyledForm = styled.form `
   margin: 2rem;
 `
 
-const StyledInput = styled.input`
+const StyledAutocomplete = styled(Autocomplete)`
   border-radius: 50px;
-  width: 80%;
   padding: 0.7rem 2rem;
-  margin: 1rem;
   border: none;
+  width: 100%;
 
   &::placeholder {
     color: #ccc;
@@ -37,16 +42,42 @@ const StyledButton = styled.button `
 `
 
 export default function Search(props) {
+  const [data, setData] = useState([])
+
+  const fetchPokemon = async () => {
+    const url = `https://pokeapi.co/api/v2/pokemon?limit=1200`;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    setData(data.results);
+  }
+
+  useEffect(() => {
+    fetchPokemon()
+  }, [])
+
   return (
-    <div>
+    <StyledWrapper>
       <StyledForm onSubmit={(e) => e.preventDefault()}>
-        <StyledInput 
-          onChange={(e) => props.setSearchValue(e.target.value)}
-          placeholder="Enter pokemon name..."
-          autoFocus
-        />
+        <StyledAutocomplete
+        freeSolo
+        disableClearable
+        options={data.map((option) => option.name)}
+        value={props.searchValue}
+        onChange={(e, newValue) => props.setSearchValue(newValue)}
+        onInputChange={(e, newValue) => {props.setSearchValue(newValue)}}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            placeholder="Enter pokemon name..."
+            margin="normal"
+            variant="outlined"
+            InputProps={{ ...params.InputProps, type: 'search' }}
+          />
+          )}
+      />
         <StyledButton onClick={(e) => props.searchPokemon(props.searchValue)}>Search</StyledButton>
       </StyledForm>
-    </div>
+    </StyledWrapper>
   )
 }

@@ -10,9 +10,9 @@ const ContentWrapper = styled.div `
   flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
   margin: 0 auto;
-  max-width: 100vw;
+  width: 100vw;
+  height: auto;
 `;
 
 function App() {
@@ -42,7 +42,6 @@ function App() {
   }, [])
 
   return (
-    <>
       <ContentWrapper>
         <GlobalStyles />
         <Header />
@@ -56,7 +55,6 @@ function App() {
           searchValue={searchValue}
         />
       </ContentWrapper>
-    </>
   );
 }
 

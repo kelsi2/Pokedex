@@ -5,7 +5,8 @@ const GlobalStyles = () => {
     <Global
       styles={{
         html: {
-          boxSizing: 'border-box'
+          boxSizing: 'border-box',
+          width: '100%'
         },
         
         body: {
@@ -17,7 +18,8 @@ const GlobalStyles = () => {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          margin: 0
+          margin: 0,
+          width: '100%'
         }
       }}
     />
