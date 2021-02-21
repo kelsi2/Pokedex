@@ -67,7 +67,6 @@ const StyledImg = styled.img `
 `;
 
 const StyledName = styled.h3 `
-  font-family: "Open Sans Condensed", "Open Sans", helvetica, sans-serif;
   text-align: center;
   font-size: 1.5em;    
   font-weight: 700;
@@ -76,7 +75,7 @@ const StyledName = styled.h3 `
 
 const NumberWrapper = styled.div `
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   flex-direction: row;
 `
@@ -99,26 +98,35 @@ const StyledInfo = styled.h3 `
   display: flex;
   justify-content: space-around;
   align-items: center;
-  font-family: "Open Sans Condensed", "Open Sans", helvetica, sans-serif;
   font-weight: 300;
+`
+
+const AbilitiesWrapper = styled.div `
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  width: 80%;
 `
 
 const StyledAbilities = styled.div `
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 `
 
 const StyledLabel = styled.span `
   display: flex;
   flex-direction: column;
   justify-content: center;
+  font-weight: 700;
+  width: fit-content;
 `
 
 const StyledSpan = styled.span `
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  margin: 0;
+  margin: 0.1rem;
+  width: fit-content;
 `
 
 const PokemonCard = (props) => {
@@ -149,15 +157,20 @@ const PokemonCard = (props) => {
         </ImgContainer>
         <StyledName>{name}</StyledName>
         <NumberWrapper>
-          <StyledNumber>{props.pokemon.height}</StyledNumber>
-          <StyledNumber>{props.pokemon.weight}</StyledNumber>
+          <StyledLabel>Height: </StyledLabel><StyledNumber>{props.pokemon.height}</StyledNumber>
+          <StyledLabel>Weight: </StyledLabel><StyledNumber>{props.pokemon.weight}</StyledNumber>
         </NumberWrapper>
         <Stats>
           <StyledInfo><StyledLabel>{poke_stats} </StyledLabel><StyledSpan>{poke_stat_values}</StyledSpan></StyledInfo>
         </Stats>
-        <StyledAbilities>
-          <StyledLabel>Types: </StyledLabel><StyledSpan>{poke_types}</StyledSpan><StyledLabel>Abilities: </StyledLabel><StyledSpan>{poke_abilities}</StyledSpan>
-        </StyledAbilities>
+        <AbilitiesWrapper>
+          <StyledAbilities>
+            <StyledLabel>Types: </StyledLabel><StyledSpan>{poke_types}</StyledSpan>
+          </StyledAbilities>
+          <StyledAbilities>
+            <StyledLabel>Abilities: </StyledLabel><StyledSpan>{poke_abilities}</StyledSpan>
+          </StyledAbilities>
+        </AbilitiesWrapper>
       </StyledCard>
       }
       </>

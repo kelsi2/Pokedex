@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import GlobalStyles from './theme/GlobalStyles';
+import Header from './components/Header';
 import PokemonCard from './components/PokemonCard';
 import Search from './components/Search';
 
@@ -42,6 +44,8 @@ function App() {
   return (
     <>
       <ContentWrapper>
+        <GlobalStyles />
+        <Header />
         <Search
           searchValue={searchValue}
           setSearchValue={setSearchValue}

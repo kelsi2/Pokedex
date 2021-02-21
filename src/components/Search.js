@@ -10,18 +10,23 @@ const StyledForm = styled.form `
 `
 
 const StyledInput = styled.input`
+  border-radius: 50px;
   width: 80%;
   padding: 0.7rem 2rem;
   margin: 1rem;
   border: none;
-  border-bottom: 1px solid rgba(0,0,0,0.5);
 
   &::placeholder {
-    text-align: center;
+    color: #ccc;
+  }
+
+  &:focus {
+    outline: none;
   }
 `
 
 const StyledButton = styled.button `
+  cursor: pointer;
   width: 70%;
   padding: 0.7rem 2rem;
   border: none;
@@ -38,6 +43,7 @@ export default function Search(props) {
         <StyledInput 
           onChange={(e) => props.setSearchValue(e.target.value)}
           placeholder="Search for Pokemon"
+          autoFocus
         />
         <StyledButton onClick={(e) => props.searchPokemon(props.searchValue)}>Search</StyledButton>
       </StyledForm>
