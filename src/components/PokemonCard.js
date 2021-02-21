@@ -53,7 +53,7 @@ const StyledCard = styled.div`
   border-radius: 15px;  
   margin: 10px;
   text-align: left;
-  margin-top: 2em;
+  margin-top: 1.5em;
 `;
 
 const ImgContainer = styled.div `

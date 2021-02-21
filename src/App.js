@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import PokemonCard from './components/PokemonCard';
 import Search from './components/Search';
@@ -25,6 +25,19 @@ function App() {
     console.log(data)
     setPokemon(data);
   }
+
+  const fetchRandom = async () => {
+    const url = `https://pokeapi.co/api/v2/pokemon/143`;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    console.log(data)
+    setPokemon(data);
+  }
+
+  useEffect(() => {
+    fetchRandom();
+  }, [])
 
   return (
     <>
