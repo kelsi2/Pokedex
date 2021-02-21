@@ -47,73 +47,117 @@ const StyledCard = styled.div`
     }
   }};
   border: 10px solid #FDBD00;
-  border-radius: 10px;
-  box-shadow: 0 3px 15px rgba(100,100,100,0.5);
+  display: inline-block;
+  width: 300px;
+  padding: 1em;
+  border-radius: 15px;  
   margin: 10px;
-  padding: 20px;
-  text-align: center;
+  text-align: left;
+  margin-top: 2em;
 `;
 
-const StyledImgContainer = styled.div `
-  max-width: 90%;
-  margin-top: 20px;
+const ImgContainer = styled.div `
+  text-align: center;
 `;
 
 const StyledImg = styled.img `
-  background-color: rgba(255, 255, 255, 0.6);
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
-  text-align: center;
+  max-height: 150px;
+  margin: auto;
+  display: inline-block;
 `;
 
-const InfoContainer = styled.div `
-  margin-top: 20px;
+const StyledName = styled.h3 `
+  font-family: "Open Sans Condensed", "Open Sans", helvetica, sans-serif;
+  text-align: center;
+  font-size: 1.5em;    
+  font-weight: 700;
+  letter-spacing: 0.02em;
+`
+
+const NumberWrapper = styled.div `
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
 `
 
 const StyledNumber = styled.span `
   background-color: rgba(0,0,0,0.1);
   padding: 5px 10px;
   border-radius: 10px;
-  font-size: 0.8em;
+  font-size: 1rem;
+`
+
+const Stats = styled.div `
+  margin: 1em auto;
+  padding: 0;
+  width: 70%;
+  font-size: 80%;
 `
 
 const StyledInfo = styled.h3 `
   display: flex;
-  margin: 15px 0 7px;
-  letter-spacing: 1px;
+  justify-content: space-around;
+  align-items: center;
+  font-family: "Open Sans Condensed", "Open Sans", helvetica, sans-serif;
+  font-weight: 300;
+`
+
+const StyledAbilities = styled.div `
+  display: flex;
+  justify-content: space-between;
+`
+
+const StyledLabel = styled.span `
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`
+
+const StyledSpan = styled.span `
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 0;
 `
 
 const PokemonCard = (props) => {
-  const name = props.pokemon.name[0].toUpperCase() + props.pokemon.name.slice(1);
+  const name = props.pokemon.length !== 0 && props.pokemon.name[0].toUpperCase() + props.pokemon.name.slice(1);
 
-  const poke_types = props.pokemon.length !== 0 && props.pokemon.types.map((type) => {
-    return <p>{type.type.name}</p>
+  const poke_types = props.pokemon.length !== 0 && props.pokemon.types.map((type, index) => {
+    return <span key={index}>{type.type.name}</span>
   })
 
-  const poke_abilities = props.pokemon.length !== 0 && props.pokemon.abilities.map((ability) => {
-    return <p>{ability.ability.name}</p>
+  const poke_abilities = props.pokemon.length !== 0 && props.pokemon.abilities.map((ability, index) => {
+    return <span key={index}>{ability.ability.name}</span>
   })
 
-  const poke_stats = props.pokemon.length !== 0 && props.pokemon.stats.map((stat) => {
-    return <p>{stat.stat.name}</p>
+  const poke_stats = props.pokemon.length !== 0 && props.pokemon.stats.map((stat, index) => {
+    return <span key={index}>{stat.stat.name}</span>
+  })
+
+  const poke_stat_values = props.pokemon.length !== 0 && props.pokemon.stats.map((stat, index) => {
+    return <span key={index}>{stat.base_stat}</span>
   })
 
   return (
     <>
     {props.pokemon &&
-      <StyledCard type={poke_types[0]}>
-        <StyledImgContainer>
+      <StyledCard key={props.pokemon.id} type={poke_types[0]}>
+        <ImgContainer>
           <StyledImg src={`https://pokeres.bastionbot.org/images/pokemon/${props.pokemon.id}.png`} alt={props.pokemon.name} />
-        </StyledImgContainer>
-        <InfoContainer>
-          <StyledInfo>{name}</StyledInfo>
+        </ImgContainer>
+        <StyledName>{name}</StyledName>
+        <NumberWrapper>
           <StyledNumber>{props.pokemon.height}</StyledNumber>
           <StyledNumber>{props.pokemon.weight}</StyledNumber>
-          <StyledInfo><span>{poke_types}</span></StyledInfo>
-          <StyledInfo><span>{poke_abilities}</span></StyledInfo>
-          <StyledInfo><span>{poke_stats}</span></StyledInfo>
-        </InfoContainer>
+        </NumberWrapper>
+        <Stats>
+          <StyledInfo><StyledLabel>{poke_stats} </StyledLabel><StyledSpan>{poke_stat_values}</StyledSpan></StyledInfo>
+        </Stats>
+        <StyledAbilities>
+          <StyledLabel>Types: </StyledLabel><StyledSpan>{poke_types}</StyledSpan><StyledLabel>Abilities: </StyledLabel><StyledSpan>{poke_abilities}</StyledSpan>
+        </StyledAbilities>
       </StyledCard>
       }
       </>

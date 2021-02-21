@@ -10,7 +10,7 @@ const ContentWrapper = styled.div `
   align-items: center;
   justify-content: space-between;
   margin: 0 auto;
-  max-width: 1200px;
+  max-width: 100vw;
 `;
 
 function App() {
