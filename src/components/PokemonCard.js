@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from '@emotion/styled';
 
 const StyledCard = styled.div`
@@ -57,14 +57,28 @@ const StyledCard = styled.div`
 `;
 
 const ImgContainer = styled.div `
-  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.2rem;
 `;
 
 const StyledImg = styled.img `
-  max-height: 100px;
+  height: 100%;
   margin: auto;
   display: inline-block;
 `;
+
+const StyledArrows = styled.button `
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+
+  &:focus {
+    outline: none;
+  }
+`
 
 const StyledName = styled.h3 `
   text-align: center;
@@ -130,11 +144,33 @@ const StyledSpan = styled.span `
 `
 
 const PokemonCard = (props) => {
+  const [imageIndex, setImageIndex] = useState(2);
+
   const images = props.pokemon.length !== 0 && Object.entries(props.pokemon.sprites)
   const imageArr = [];
   props.pokemon.length !== 0 && images.forEach(image => {
-   imageArr.push(image[1])
+    if (image[1] !== null && typeof image[1] === 'string') {
+      imageArr.push(image[1])
+    }
   })
+
+  const handleClickRight = () => {
+    const lastIndex = imageArr.length - 1;
+    const currentImageIndex = imageIndex;
+    const shouldResetIndex = currentImageIndex === lastIndex;
+    const index =  shouldResetIndex ? 0 : currentImageIndex + 1;
+
+    setImageIndex(+index);
+  }
+
+  const handleClickLeft = () => {
+    const lastIndex = imageArr.length - 1;
+    const currentImageIndex = imageIndex;
+    const shouldResetIndex = currentImageIndex === 0;
+    const index =  shouldResetIndex ? lastIndex : currentImageIndex - 1;
+
+    setImageIndex(index);
+  }
 
   const name = props.pokemon.length !== 0 && props.pokemon.name[0].toUpperCase() + props.pokemon.name.slice(1);
 
@@ -159,7 +195,9 @@ const PokemonCard = (props) => {
     {props.pokemon &&
       <StyledCard key={props.pokemon.id} type={poke_types[0]}>
         <ImgContainer>
-          <StyledImg src={imageArr[4]} alt={props.pokemon.name} />
+          <StyledArrows><i onClick={handleClickLeft} className="fas fa-chevron-left"></i></StyledArrows>
+          <StyledImg src={imageArr[imageIndex]} alt={props.pokemon.name} />
+          <StyledArrows><i onClick={handleClickRight} className="fas fa-chevron-right"></i></StyledArrows>
         </ImgContainer>
         <StyledName>{name}</StyledName>
         <NumberWrapper>
