@@ -61,7 +61,7 @@ const ImgContainer = styled.div `
 `;
 
 const StyledImg = styled.img `
-  max-height: 150px;
+  max-height: 100px;
   margin: auto;
   display: inline-block;
 `;
@@ -130,6 +130,12 @@ const StyledSpan = styled.span `
 `
 
 const PokemonCard = (props) => {
+  const images = props.pokemon.length !== 0 && Object.entries(props.pokemon.sprites)
+  const imageArr = [];
+  props.pokemon.length !== 0 && images.forEach(image => {
+   imageArr.push(image[1])
+  })
+
   const name = props.pokemon.length !== 0 && props.pokemon.name[0].toUpperCase() + props.pokemon.name.slice(1);
 
   const poke_types = props.pokemon.length !== 0 && props.pokemon.types.map((type, index) => {
@@ -153,7 +159,7 @@ const PokemonCard = (props) => {
     {props.pokemon &&
       <StyledCard key={props.pokemon.id} type={poke_types[0]}>
         <ImgContainer>
-          <StyledImg src={`https://pokeres.bastionbot.org/images/pokemon/${props.pokemon.id}.png`} alt={props.pokemon.name} />
+          <StyledImg src={imageArr[4]} alt={props.pokemon.name} />
         </ImgContainer>
         <StyledName>{name}</StyledName>
         <NumberWrapper>

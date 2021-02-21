@@ -42,7 +42,7 @@ export default function Search(props) {
       <StyledForm onSubmit={(e) => e.preventDefault()}>
         <StyledInput 
           onChange={(e) => props.setSearchValue(e.target.value)}
-          placeholder="Search for Pokemon"
+          placeholder="Enter pokemon name..."
           autoFocus
         />
         <StyledButton onClick={(e) => props.searchPokemon(props.searchValue)}>Search</StyledButton>
