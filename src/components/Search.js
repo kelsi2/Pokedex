@@ -19,26 +19,31 @@ const StyledAutocomplete = styled(Autocomplete)`
   border-radius: 50px;
   padding: 0.7rem 2rem;
   border: none;
-  width: 100%;
+  width: 60%;
 
   &::placeholder {
     color: #ccc;
-  }
-
-  &:focus {
-    outline: none;
   }
 `
 
 const StyledButton = styled.button `
   cursor: pointer;
-  width: 70%;
+  width: 50%;
   padding: 0.7rem 2rem;
   border: none;
   background-color: #EE5350;
   color: #fff;
   border-radius: 5px;
   font-size: 1.2rem;
+
+  &:hover {
+    transform: scale(0.98);
+    font-weight: bold;
+  }
+
+  &:focus {
+    outline: none;
+  }
 `
 
 export default function Search(props) {
@@ -55,7 +60,7 @@ export default function Search(props) {
         renderInput={(params) => (
           <TextField
             {...params}
-            placeholder="Enter pokemon name..."
+            placeholder="Enter Pokemon name..."
             margin="normal"
             variant="outlined"
             InputProps={{ ...params.InputProps, type: 'search' }}

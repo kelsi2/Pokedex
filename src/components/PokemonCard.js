@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 const StyledCard = styled.div`
+  /* Check card type to determine background color and color (given more time I'd like to find a way to make this cleaner) */
   background-color: ${({type}) => {
     if (type) {
       if (type.props.children === 'fire') return '#AC1E26';
@@ -144,14 +145,17 @@ const StyledSpan = styled.span `
 `
 
 const PokemonCard = (props) => {
-  const images = props.pokemon.length !== 0 && Object.entries(props.pokemon.sprites)
+  const images = props.pokemon.length !== 0 && Object.entries(props.pokemon.sprites);
   const imageArr = [];
+
+  // Check image url to ensure it isn't null or an object then add it to the array
   props.pokemon.length !== 0 && images.forEach(image => {
     if (image[1] !== null && typeof image[1] === 'string') {
       imageArr.push(image[1])
     }
   })
 
+  // Given more time to refactor I'd like to make these one function, this feels very repetitive but works
   const handleClickRight = () => {
     const lastIndex = imageArr.length - 1;
     const currentImageIndex = props.imageIndex;
@@ -170,6 +174,7 @@ const PokemonCard = (props) => {
     props.setImageIndex(index);
   }
 
+  // Capitalize first letter of name
   const name = props.pokemon.length !== 0 && props.pokemon.name[0].toUpperCase() + props.pokemon.name.slice(1);
 
   const poke_types = props.pokemon.length !== 0 && props.pokemon.types.map((type, index) => {
