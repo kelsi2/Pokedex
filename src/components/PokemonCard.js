@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 
 const StyledCard = styled.div`
@@ -144,8 +144,6 @@ const StyledSpan = styled.span `
 `
 
 const PokemonCard = (props) => {
-  const [imageIndex, setImageIndex] = useState(2);
-
   const images = props.pokemon.length !== 0 && Object.entries(props.pokemon.sprites)
   const imageArr = [];
   props.pokemon.length !== 0 && images.forEach(image => {
@@ -156,20 +154,20 @@ const PokemonCard = (props) => {
 
   const handleClickRight = () => {
     const lastIndex = imageArr.length - 1;
-    const currentImageIndex = imageIndex;
+    const currentImageIndex = props.imageIndex;
     const shouldResetIndex = currentImageIndex === lastIndex;
     const index =  shouldResetIndex ? 0 : currentImageIndex + 1;
 
-    setImageIndex(+index);
+    props.setImageIndex(index);
   }
 
   const handleClickLeft = () => {
     const lastIndex = imageArr.length - 1;
-    const currentImageIndex = imageIndex;
+    const currentImageIndex = props.imageIndex;
     const shouldResetIndex = currentImageIndex === 0;
     const index =  shouldResetIndex ? lastIndex : currentImageIndex - 1;
 
-    setImageIndex(index);
+    props.setImageIndex(index);
   }
 
   const name = props.pokemon.length !== 0 && props.pokemon.name[0].toUpperCase() + props.pokemon.name.slice(1);
@@ -196,7 +194,7 @@ const PokemonCard = (props) => {
       <StyledCard key={props.pokemon.id} type={poke_types[0]}>
         <ImgContainer>
           <StyledArrows><i onClick={handleClickLeft} className="fas fa-chevron-left"></i></StyledArrows>
-          <StyledImg src={imageArr[imageIndex]} alt={props.pokemon.name} />
+          <StyledImg src={imageArr[props.imageIndex]} alt={props.pokemon.name} />
           <StyledArrows><i onClick={handleClickRight} className="fas fa-chevron-right"></i></StyledArrows>
         </ImgContainer>
         <StyledName>{name}</StyledName>

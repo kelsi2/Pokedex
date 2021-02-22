@@ -17,7 +17,22 @@ const ContentWrapper = styled.div `
 
 function App() {
   const [searchValue, setSearchValue] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const [pokemon, setPokemon] = useState([]);
+  const [imageIndex, setImageIndex] = useState(0);
+  const [data, setData] = useState([])
+
+  const fetchPokemon = async () => {
+    const url = `https://pokeapi.co/api/v2/pokemon?limit=1200`;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    setData(data.results);
+  }
+
+  useEffect(() => {
+    fetchPokemon()
+  }, [])
 
   const searchPokemon = async (value) => {
     const url = `https://pokeapi.co/api/v2/pokemon/${value}`;
@@ -26,31 +41,25 @@ function App() {
 
     console.log(data)
     setPokemon(data);
+    setImageIndex(0)
   }
-
-  const fetchRandom = async () => {
-    const url = `https://pokeapi.co/api/v2/pokemon/143`;
-    const res = await fetch(url);
-    const data = await res.json();
-
-    console.log(data)
-    setPokemon(data);
-  }
-
-  useEffect(() => {
-    fetchRandom();
-  }, [])
 
   return (
       <ContentWrapper>
         <GlobalStyles />
         <Header />
         <Search
+          data={data}
+          setImageIndex={setImageIndex}
+          inputValue={inputValue}
+          setInputValue={setInputValue}
           searchValue={searchValue}
           setSearchValue={setSearchValue}
           searchPokemon={searchPokemon}
         />
         <PokemonCard
+          imageIndex={imageIndex}
+          setImageIndex={setImageIndex}
           pokemon={pokemon}
           searchValue={searchValue}
         />

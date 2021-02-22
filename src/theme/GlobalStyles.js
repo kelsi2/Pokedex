@@ -5,6 +5,7 @@ const GlobalStyles = () => {
     <Global
       styles={{
         html: {
+          padding: '2rem',
           boxSizing: 'border-box',
           width: '100%'
         },

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -42,30 +42,16 @@ const StyledButton = styled.button `
 `
 
 export default function Search(props) {
-  const [data, setData] = useState([])
-
-  const fetchPokemon = async () => {
-    const url = `https://pokeapi.co/api/v2/pokemon?limit=1200`;
-    const res = await fetch(url);
-    const data = await res.json();
-
-    setData(data.results);
-  }
-
-  useEffect(() => {
-    fetchPokemon()
-  }, [])
-
   return (
     <StyledWrapper>
       <StyledForm onSubmit={(e) => e.preventDefault()}>
         <StyledAutocomplete
         freeSolo
         disableClearable
-        options={data.map((option) => option.name)}
+        options={props.data.map((option) => option.name)}
         value={props.searchValue}
+        onInputChange={(e, newValue) => {props.setInputValue(newValue)}}
         onChange={(e, newValue) => props.setSearchValue(newValue)}
-        onInputChange={(e, newValue) => {props.setSearchValue(newValue)}}
         renderInput={(params) => (
           <TextField
             {...params}
