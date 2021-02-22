@@ -19,7 +19,7 @@ const StyledAutocomplete = styled(Autocomplete)`
   border-radius: 50px;
   padding: 0.7rem 2rem;
   border: none;
-  width: 60%;
+  width: 40%;
 
   &::placeholder {
     color: #ccc;
@@ -28,7 +28,7 @@ const StyledAutocomplete = styled(Autocomplete)`
 
 const StyledButton = styled.button `
   cursor: pointer;
-  width: 50%;
+  width: 30%;
   padding: 0.7rem 2rem;
   border: none;
   background-color: #EE5350;

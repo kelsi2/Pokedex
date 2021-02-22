@@ -5,14 +5,13 @@ const GlobalStyles = () => {
     <Global
       styles={{
         html: {
-          padding: '2rem',
           boxSizing: 'border-box',
           width: '100%'
         },
         
         body: {
           backgroundColor: '#efefbb',
-          background: 'linear-gradient(to right, #d4d3dd, #efefbb)',
+          background: 'linear-gradient(to right, #C8EEEE, #EBF9E9)',
           boxSizing: 'border-box',
           fontFamily: "'Lato', sans-serif",
           display: 'flex',

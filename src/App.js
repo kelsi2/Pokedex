@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import GlobalStyles from './theme/GlobalStyles';
+import Loading from './components/Loading';
 import Header from './components/Header';
 import PokemonCard from './components/PokemonCard';
 import Search from './components/Search';
@@ -21,6 +22,7 @@ function App() {
   // Pokemon tracks all retrieved data and populates the cards
   // imageIndex tracks the sprites for each card (for some reason index 0 is the back so starting at 2!)
   // Data fetches all pokemon data for autocomplete
+  const [loading, setLoading] = useState(true);
   const [searchValue, setSearchValue] = useState('');
   const [inputValue, setInputValue] = useState('');
   const [pokemon, setPokemon] = useState([]);
@@ -50,14 +52,16 @@ function App() {
   }
 
   // I didn't have enough time to finish this! Currently this will load one static card when the app is loaded
+  const rand = Math.floor(Math.random() * 600)
   const fetchRandom = async () => {
-    const url = `https://pokeapi.co/api/v2/pokemon/265`;
+    const url = `https://pokeapi.co/api/v2/pokemon/${rand}`;
     const res = await fetch(url);
     const data = await res.json();
 
     console.log(data)
     setPokemon(data);
-    setImageIndex(2)
+    setImageIndex(2);
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -66,24 +70,31 @@ function App() {
   }, [])
 
   return (
-      <ContentWrapper>
-        <GlobalStyles />
-        <Header />
-        <Search
-          data={data}
-          setImageIndex={setImageIndex}
-          inputValue={inputValue}
-          setInputValue={setInputValue}
-          searchValue={searchValue}
-          setSearchValue={setSearchValue}
-          searchPokemon={searchPokemon}
-        />
-        <PokemonCard
-          imageIndex={imageIndex}
-          setImageIndex={setImageIndex}
-          pokemon={pokemon}
-          searchValue={searchValue}
-        />
+    <ContentWrapper>  
+    <GlobalStyles />
+        {loading ? (
+          <Loading />
+        ) : (
+        <>
+          <Header />
+          <Search
+            data={data}
+            setImageIndex={setImageIndex}
+            inputValue={inputValue}
+            setInputValue={setInputValue}
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+            searchPokemon={searchPokemon}
+          />
+          <PokemonCard
+            imageIndex={imageIndex}
+            setImageIndex={setImageIndex}
+            pokemon={pokemon}
+            searchValue={searchValue}
+          />
+        </>
+        )
+      }
       </ContentWrapper>
   );
 }
