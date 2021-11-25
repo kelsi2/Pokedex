@@ -46,17 +46,17 @@ const StyledButton = styled.button `
   }
 `
 
-export default function Search(props) {
+export default function Search({data, searchValue, setSearchValue, setInputValue, searchPokemon}) {
   return (
     <StyledWrapper>
       <StyledForm onSubmit={(e) => e.preventDefault()}>
         <StyledAutocomplete
         freeSolo
         disableClearable
-        options={props.data.map((option) => option.name)}
-        value={props.searchValue}
-        onInputChange={(e, newValue) => {props.setInputValue(newValue)}}
-        onChange={(e, newValue) => props.setSearchValue(newValue)}
+        options={data.map((option) => option.name)}
+        value={searchValue}
+        onInputChange={(e, newValue) => {setInputValue(newValue)}}
+        onChange={(e, newValue) => setSearchValue(newValue)}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -67,7 +67,7 @@ export default function Search(props) {
           />
           )}
       />
-        <StyledButton onClick={(e) => props.searchPokemon(props.searchValue)}>Search</StyledButton>
+        <StyledButton onClick={() => searchPokemon(searchValue)}>Search</StyledButton>
       </StyledForm>
     </StyledWrapper>
   )

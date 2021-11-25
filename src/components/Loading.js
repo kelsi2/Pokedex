@@ -44,7 +44,6 @@ const StyledRing = styled.div `
 const Loading = () => {
   return (
     <Container>  
-      <h1>Loading...</h1>
       <StyledRing />
     </Container>
   )
