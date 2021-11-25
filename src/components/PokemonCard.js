@@ -5,46 +5,50 @@ const StyledCard = styled.div`
   /* Check card type to determine background color and color (given more time I'd like to find a way to make this cleaner) */
   background-color: ${({type}) => {
     if (type) {
-      if (type.props.children === 'fire') return '#AC1E26';
-      if (type.props.children === 'grass') return '#157B3D';
-      if (type.props.children === 'electric') return '#E2E42B';
-      if (type.props.children === 'water') return '#1552E2';
-      if (type.props.children === 'ground') return '#A9702C';
-      if (type.props.children === 'rock') return '#48180C';
-      if (type.props.children === 'fairy') return '#981944';
-      if (type.props.children === 'poison') return '#5E2E88';
-      if (type.props.children === 'bug') return '#1D4B28';
-      if (type.props.children === 'dragon') return '#458A97';
-      if (type.props.children === 'psychic') return '#A42A69';
-      if (type.props.children === 'flying') return '#48677E';
-      if (type.props.children === 'fighting') return '#993F26';
-      if (type.props.children === 'normal') return '#74525B';
-      if (type.props.children === 'dark') return '#040706';
-      if (type.props.children === 'ghost') return '#323569';
-      if (type.props.children === 'ice') return '#86D1F6';
-      if (type.props.children === 'steel') return '#5F746C';
+      const propsChild = type.props.children;
+      if (propsChild === 'fire') return '#AC1E26';
+      if (propsChild === 'grass') return '#157B3D';
+      if (propsChild === 'electric') return '#E2E42B';
+      if (propsChild === 'water') return '#1552E2';
+      if (propsChild === 'ground') return '#A9702C';
+      if (propsChild === 'rock') return '#48180C';
+      if (propsChild === 'fairy') return '#981944';
+      if (propsChild === 'poison') return '#5E2E88';
+      if (propsChild === 'bug') return '#1D4B28';
+      if (propsChild === 'dragon') return '#458A97';
+      if (propsChild === 'psychic') return '#A42A69';
+      if (propsChild === 'flying') return '#48677E';
+      if (propsChild === 'fighting') return '#993F26';
+      if (propsChild === 'normal') return '#74525B';
+      if (propsChild === 'dark') return '#040706';
+      if (propsChild === 'ghost') return '#323569';
+      if (propsChild === 'ice') return '#86D1F6';
+      if (propsChild === 'steel') return '#5F746C';
     }
   }};
   color: ${({type}) => {
     if (type) {
-      if (type.props.children === 'fire') return '#fff';
-      if (type.props.children === 'grass') return '#fff';
-      if (type.props.children === 'electric') return '#000';
-      if (type.props.children === 'water') return '#fff';
-      if (type.props.children === 'ground') return '#fff';
-      if (type.props.children === 'rock') return '#fff';
-      if (type.props.children === 'fairy') return '#fff';
-      if (type.props.children === 'poison') return '#fff';
-      if (type.props.children === 'bug') return '#fff';
-      if (type.props.children === 'dragon') return '#000';
-      if (type.props.children === 'psychic') return '#fff';
-      if (type.props.children === 'flying') return '#fff';
-      if (type.props.children === 'fighting') return '#fff';
-      if (type.props.children === 'normal') return '#fff';
-      if (type.props.children === 'dark') return '#fff';
-      if (type.props.children === 'ghost') return '#fff';
-      if (type.props.children === 'ice') return '#000';
-      if (type.props.children === 'steel') return '#fff';
+      const propsChild = type.props.children;
+      // White text
+      if (propsChild === 'fire') return '#fff';
+      if (propsChild === 'grass') return '#fff';
+      if (propsChild === 'water') return '#fff';
+      if (propsChild === 'ground') return '#fff';
+      if (propsChild === 'rock') return '#fff';
+      if (propsChild === 'fairy') return '#fff';
+      if (propsChild === 'poison') return '#fff';
+      if (propsChild === 'bug') return '#fff';
+      if (propsChild === 'psychic') return '#fff';
+      if (propsChild === 'flying') return '#fff';
+      if (propsChild === 'fighting') return '#fff';
+      if (propsChild === 'normal') return '#fff';
+      if (propsChild === 'dark') return '#fff';
+      if (propsChild === 'ghost') return '#fff';
+      if (propsChild === 'steel') return '#fff';
+      // Black text
+      if (propsChild === 'electric') return '#000';
+      if (propsChild === 'dragon') return '#000';
+      if (propsChild === 'ice') return '#000';
     }
   }};
   border: 10px solid #FDBD00;
@@ -144,68 +148,68 @@ const StyledSpan = styled.span `
   width: fit-content;
 `
 
-const PokemonCard = (props) => {
-  const images = props.pokemon.length !== 0 && Object.entries(props.pokemon.sprites);
+const PokemonCard = ({pokemon, imageIndex, setImageIndex}) => {
+  const images = pokemon.length !== 0 && Object.entries(pokemon.sprites);
   const imageArr = [];
 
   // Check image url to ensure it isn't null or an object then add it to the array
-  props.pokemon.length !== 0 && images.forEach(image => {
+  pokemon.length !== 0 && images.forEach(image => {
     if (image[1] !== null && typeof image[1] === 'string') {
       imageArr.push(image[1])
     }
   })
 
-  // Given more time to refactor I'd like to make these one function, this feels very repetitive but works
-  const handleClickRight = () => {
+  const handleClick = () => {
     const lastIndex = imageArr.length - 1;
-    const currentImageIndex = props.imageIndex;
-    const shouldResetIndex = currentImageIndex === lastIndex;
-    const index =  shouldResetIndex ? 0 : currentImageIndex + 1;
+    const currentImageIndex = imageIndex;
+    const shouldResetIndexRight = currentImageIndex === lastIndex;
+    const shouldResetIndexLeft = currentImageIndex === 0;
 
-    props.setImageIndex(index);
-  }
+    if (shouldResetIndexLeft) {
+      setImageIndex(lastIndex);
+    } else {
+      setImageIndex(currentImageIndex - 1)
+    }
 
-  const handleClickLeft = () => {
-    const lastIndex = imageArr.length - 1;
-    const currentImageIndex = props.imageIndex;
-    const shouldResetIndex = currentImageIndex === 0;
-    const index =  shouldResetIndex ? lastIndex : currentImageIndex - 1;
-
-    props.setImageIndex(index);
+    if (shouldResetIndexRight) {
+      setImageIndex(0);
+    } else {
+      setImageIndex(currentImageIndex + 1)
+    }
   }
 
   // Capitalize first letter of name
-  const name = props.pokemon.length !== 0 && props.pokemon.name[0].toUpperCase() + props.pokemon.name.slice(1);
+  const name = pokemon.length !== 0 && pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
 
-  const poke_types = props.pokemon.length !== 0 && props.pokemon.types.map((type, index) => {
+  const poke_types = pokemon.length !== 0 && pokemon.types.map((type, index) => {
     return <span key={index}>{type.type.name}</span>
   })
 
-  const poke_abilities = props.pokemon.length !== 0 && props.pokemon.abilities.map((ability, index) => {
+  const poke_abilities = pokemon.length !== 0 && pokemon.abilities.map((ability, index) => {
     return <span key={index}>{ability.ability.name}</span>
   })
 
-  const poke_stats = props.pokemon.length !== 0 && props.pokemon.stats.map((stat, index) => {
+  const poke_stats = pokemon.length !== 0 && pokemon.stats.map((stat, index) => {
     return <span key={index}>{stat.stat.name}</span>
   })
 
-  const poke_stat_values = props.pokemon.length !== 0 && props.pokemon.stats.map((stat, index) => {
+  const poke_stat_values = pokemon.length !== 0 && pokemon.stats.map((stat, index) => {
     return <span key={index}>{stat.base_stat}</span>
   })
 
   return (
     <>
-    {props.pokemon &&
-      <StyledCard key={props.pokemon.id} type={poke_types[0]}>
+    {pokemon &&
+      <StyledCard key={pokemon.id} type={poke_types[0]}>
         <ImgContainer>
-          <StyledArrows><i onClick={handleClickLeft} className="fas fa-chevron-left"></i></StyledArrows>
-          <StyledImg src={imageArr[props.imageIndex]} alt={props.pokemon.name} />
-          <StyledArrows><i onClick={handleClickRight} className="fas fa-chevron-right"></i></StyledArrows>
+          <StyledArrows><i onClick={handleClick} className="fas fa-chevron-left"></i></StyledArrows>
+          <StyledImg src={imageArr[imageIndex]} alt={pokemon.name} />
+          <StyledArrows><i onClick={handleClick} className="fas fa-chevron-right"></i></StyledArrows>
         </ImgContainer>
         <StyledName>{name}</StyledName>
         <NumberWrapper>
-          <StyledLabel>Height: </StyledLabel><StyledNumber>{props.pokemon.height}</StyledNumber>
-          <StyledLabel>Weight: </StyledLabel><StyledNumber>{props.pokemon.weight}</StyledNumber>
+          <StyledLabel>Height: </StyledLabel><StyledNumber>{pokemon.height}</StyledNumber>
+          <StyledLabel>Weight: </StyledLabel><StyledNumber>{pokemon.weight}</StyledNumber>
         </NumberWrapper>
         <Stats>
           <StyledInfo><StyledLabel>{poke_stats} </StyledLabel><StyledSpan>{poke_stat_values}</StyledSpan></StyledInfo>
